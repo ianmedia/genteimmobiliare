@@ -7,16 +7,30 @@
 <title>RE/MAX Abacus Roma</title>
 <script>
   (function(){
-    var WEB = "https://www.youtube.com/@remaxabacusroma";
+    var WEB     = "https://www.youtube.com/@remaxabacusroma";
+    var IOS_APP = "youtube://www.youtube.com/@remaxabacusroma";
     var ua = navigator.userAgent || navigator.vendor || "";
-    function go(url){ window.location.replace(url); }
-    try{
-      if(/android/i.test(ua)){
-        go("intent://www.youtube.com/@remaxabacusroma#Intent;package=com.google.android.youtube;scheme=https;S.browser_fallback_url=" + encodeURIComponent(WEB) + ";end");
-      } else {
-        go(WEB);
-      }
-    }catch(e){ go(WEB); }
+    var isAndroid = /android/i.test(ua);
+    var isIOS = /iphone|ipad|ipod/i.test(ua) && !window.MSStream;
+    function web(){ window.location.replace(WEB); }
+
+    if (isAndroid) {
+      // Android: apre direttamente l'app YouTube, fallback al web se non installata
+      window.location.replace(
+        "intent://www.youtube.com/@remaxabacusroma#Intent;package=com.google.android.youtube;scheme=https;S.browser_fallback_url=" +
+        encodeURIComponent(WEB) + ";end"
+      );
+    } else if (isIOS) {
+      // iOS: prova lo schema dell'app YouTube, fallback al web se non si apre
+      var fallback = setTimeout(function(){ if (!document.hidden) web(); }, 900);
+      document.addEventListener("visibilitychange", function(){
+        if (document.hidden) clearTimeout(fallback);
+      });
+      window.addEventListener("pagehide", function(){ clearTimeout(fallback); });
+      window.location = IOS_APP;
+    } else {
+      web();
+    }
   })();
 </script>
 <noscript><meta http-equiv="refresh" content="0;url=https://www.youtube.com/@remaxabacusroma"></noscript>
