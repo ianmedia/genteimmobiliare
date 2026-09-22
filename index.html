@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gente Immobiliare</title>
+<meta name="description" content="Gente Immobiliare — RE/MAX Abacus Roma.">
+<meta name="theme-color" content="#003da5">
+<style>
+  :root{ --red:#dc1c2e; --blue:#003da5; --ink:#0c1524; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); background:#fff;
+    display:flex; align-items:center; justify-content:center; min-height:100dvh; padding:24px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ text-align:center; max-width:520px; }
+  .bar{ height:9px; width:150px; margin:0 auto 30px; border-radius:100px; overflow:hidden;
+    background:linear-gradient(90deg,var(--red) 0 33%,#fff 33% 66%,var(--blue) 66% 100%); box-shadow:0 2px 12px rgba(0,0,0,.08); }
+  .kicker{ font-size:12px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--blue); }
+  h1{ margin:14px 0 10px; font-size:clamp(30px,7vw,46px); font-weight:900; letter-spacing:-.03em; line-height:1.02; }
+  h1 span{ color:var(--red); }
+  p{ color:#5b6b80; font-size:clamp(15px,2.4vw,17px); line-height:1.6; margin:0 auto; max-width:38ch; }
+  .cta{ display:inline-flex; align-items:center; gap:10px; margin-top:26px; text-decoration:none;
+    background:var(--blue); color:#fff; font-weight:700; font-size:15px; padding:13px 26px; border-radius:100px;
+    box-shadow:0 12px 28px rgba(0,61,165,.26); transition:transform .15s, box-shadow .15s; }
+  .cta:hover{ transform:translateY(-2px); box-shadow:0 18px 36px rgba(0,61,165,.34); }
+  .foot{ margin-top:34px; font-size:12px; color:#9aa7b8; letter-spacing:.02em; }
+  @media (prefers-color-scheme:dark){
+    body{ background:#0c1524; color:#eef3fb } p{ color:#9fb0c6 } .foot{ color:#6c7d94 }
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="bar" aria-hidden="true"></div>
+    <div class="kicker">RE/MAX Abacus Roma</div>
+    <h1>Gente <span>Immobiliare</span></h1>
+    <p>Comprare o vendere casa senza pensieri, con chi il mestiere lo fa sul serio.</p>
+    <a class="cta" href="https://www.youtube.com/@remaxabacusroma" rel="noopener">Guardaci su YouTube</a>
+    <div class="foot">genteimmobiliare.it</div>
+  </main>
+</body>
+</html>
