@@ -12,7 +12,8 @@ stampa e rimando al canale YouTube.
   feature de Il Messaggero, anteprima al Cinema Eden e call to action verso
   `@remaxabacusroma`. Font Hanken Grotesk, palette del brand kit LGIM.
 - `assets/` — logo LGIM, logo RE/MAX Abacus, video di sfondo, poster,
-  fotogrammi del trailer, immagine Open Graph e favicon.
+  still ufficiali della serie, ritratto dell'host, immagine Open Graph e
+  favicon.
 - `nfc/index.html` — pagina di redirect deep-link verso il canale YouTube
   `@remaxabacusroma`. Su Android forza l'app YouTube con `intent://` e
   fallback web, su iOS e desktop usa l'universal link. Raggiungibile a `/nfc`
