@@ -3,44 +3,658 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gente Immobiliare</title>
-<meta name="description" content="Gente Immobiliare — RE/MAX Abacus Roma.">
-<meta name="theme-color" content="#003da5">
+<title>La Gente Immobiliare — la docu-serie di RE/MAX Abacus</title>
+<meta name="description" content="La Gente Immobiliare è la docu-serie di RE/MAX Abacus prodotta da Quitebold. Non le case, ma le persone dietro le chiavi. Guarda il trailer e gli episodi su YouTube.">
+<link rel="canonical" href="https://genteimmobiliare.it/">
+<meta name="theme-color" content="#0B0E14">
+<meta name="author" content="RE/MAX Abacus · Quitebold">
+
+<!-- Open Graph -->
+<meta property="og:type" content="video.tv_show">
+<meta property="og:site_name" content="La Gente Immobiliare">
+<meta property="og:title" content="La Gente Immobiliare — la docu-serie di RE/MAX Abacus">
+<meta property="og:description" content="Dietro ogni finestra c'è una storia. La docu-serie di RE/MAX Abacus prodotta da Quitebold.">
+<meta property="og:url" content="https://genteimmobiliare.it/">
+<meta property="og:image" content="https://genteimmobiliare.it/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="it_IT">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="La Gente Immobiliare — la docu-serie di RE/MAX Abacus">
+<meta name="twitter:description" content="Dietro ogni finestra c'è una storia. Prodotta da Quitebold per RE/MAX Abacus.">
+<meta name="twitter:image" content="https://genteimmobiliare.it/assets/og.jpg">
+
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/og.jpg">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TVSeries",
+  "name": "La Gente Immobiliare",
+  "alternateName": "LGIM",
+  "url": "https://genteimmobiliare.it/",
+  "description": "Docu-serie di branded entertainment che usa il mercato immobiliare come lente per raccontare storie umane. Non le case, ma le persone dietro le chiavi.",
+  "genre": ["Documentary", "Reality"],
+  "inLanguage": "it",
+  "numberOfEpisodes": 6,
+  "image": "https://genteimmobiliare.it/assets/og.jpg",
+  "trailer": {
+    "@type": "VideoObject",
+    "name": "La Gente Immobiliare — Trailer",
+    "description": "Il trailer ufficiale della docu-serie La Gente Immobiliare.",
+    "thumbnailUrl": "https://i.ytimg.com/vi/LlnWaTOlDv0/maxresdefault.jpg",
+    "uploadDate": "2026-09-23",
+    "embedUrl": "https://www.youtube.com/embed/LlnWaTOlDv0",
+    "contentUrl": "https://www.youtube.com/watch?v=LlnWaTOlDv0"
+  },
+  "productionCompany": [
+    { "@type": "Organization", "name": "RE/MAX Abacus", "url": "https://remax-abacus.com/" },
+    { "@type": "Organization", "name": "Quitebold", "url": "https://quitebold.studio/" }
+  ],
+  "sameAs": ["https://www.youtube.com/@remaxabacusroma"]
+}
+</script>
+
 <style>
-  :root{ --red:#dc1c2e; --blue:#003da5; --ink:#0c1524; }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
-    color:var(--ink); background:#fff;
-    display:flex; align-items:center; justify-content:center; min-height:100dvh; padding:24px;
-    -webkit-font-smoothing:antialiased;
+  :root{
+    --white:#F5F4F0;
+    --pure:#FFFFFF;
+    --red:#DC1C2E;
+    --blue:#003DA5;
+    --amber:#FFB95C;
+    --night:#0B0E14;
+    --night-2:#10151f;
+    --line:rgba(245,244,240,.12);
+    --muted:rgba(245,244,240,.62);
+    --muted-2:rgba(245,244,240,.42);
+    --maxw:1200px;
+    --font:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
-  .wrap{ text-align:center; max-width:520px; }
-  .bar{ height:9px; width:150px; margin:0 auto 30px; border-radius:100px; overflow:hidden;
-    background:linear-gradient(90deg,var(--red) 0 33%,#fff 33% 66%,var(--blue) 66% 100%); box-shadow:0 2px 12px rgba(0,0,0,.08); }
-  .kicker{ font-size:12px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--blue); }
-  h1{ margin:14px 0 10px; font-size:clamp(30px,7vw,46px); font-weight:900; letter-spacing:-.03em; line-height:1.02; }
-  h1 span{ color:var(--red); }
-  p{ color:#5b6b80; font-size:clamp(15px,2.4vw,17px); line-height:1.6; margin:0 auto; max-width:38ch; }
-  .cta{ display:inline-flex; align-items:center; gap:10px; margin-top:26px; text-decoration:none;
-    background:var(--blue); color:#fff; font-weight:700; font-size:15px; padding:13px 26px; border-radius:100px;
-    box-shadow:0 12px 28px rgba(0,61,165,.26); transition:transform .15s, box-shadow .15s; }
-  .cta:hover{ transform:translateY(-2px); box-shadow:0 18px 36px rgba(0,61,165,.34); }
-  .foot{ margin-top:34px; font-size:12px; color:#9aa7b8; letter-spacing:.02em; }
-  @media (prefers-color-scheme:dark){
-    body{ background:#0c1524; color:#eef3fb } p{ color:#9fb0c6 } .foot{ color:#6c7d94 }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font); background:var(--night); color:var(--white);
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:70;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 24px;
+    transition:background .35s ease, backdrop-filter .35s ease, border-color .35s ease, padding .35s ease;
+    border-bottom:1px solid transparent;
+  }
+  .nav.solid{
+    background:rgba(8,11,17,.82);
+    backdrop-filter:saturate(140%) blur(14px);
+    -webkit-backdrop-filter:saturate(140%) blur(14px);
+    border-bottom-color:var(--line);
+    padding:12px 24px;
+  }
+  .nav-l{display:flex;align-items:center;gap:16px;min-width:0}
+  .nav-logo{height:34px;width:auto}
+  .nav-sep{width:1px;height:22px;background:var(--line);flex:none}
+  .nav-by{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap;font-weight:600}
+  .nav-cta{
+    display:inline-flex;align-items:center;gap:9px;
+    background:var(--red);color:#fff;font-weight:700;font-size:14px;
+    padding:10px 18px;border-radius:100px;white-space:nowrap;
+    transition:transform .15s ease, background .2s ease;
+  }
+  .nav-cta:hover{transform:translateY(-1px);background:#e8253a}
+  .nav-cta svg{width:15px;height:15px;flex:none}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
+  .hero-video,.hero-fallback{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  }
+  .hero-fallback{z-index:0}
+  .hero-scrim{
+    position:absolute;inset:0;z-index:1;
+    background:
+      linear-gradient(180deg, rgba(11,14,20,.55) 0%, rgba(11,14,20,.15) 24%, rgba(11,14,20,.15) 46%, rgba(11,14,20,.8) 82%, var(--night) 100%),
+      radial-gradient(120% 80% at 50% 30%, transparent 40%, rgba(11,14,20,.55) 100%);
+  }
+  .hero-inner{position:relative;z-index:2;width:100%;padding-bottom:8vh}
+  .hero-mark{height:clamp(120px,20vw,220px);width:auto;margin-bottom:22px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.5))}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;
+    color:var(--white);margin-bottom:16px;
+  }
+  .hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red)}
+  .hero h1{
+    font-size:clamp(30px,5.4vw,60px);font-weight:300;line-height:1.05;letter-spacing:-.02em;
+    max-width:16ch;margin-bottom:26px;
+  }
+  .hero h1 b{font-weight:800}
+  .hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .btn-play{
+    display:inline-flex;align-items:center;gap:13px;
+    background:var(--pure);color:var(--night);font-weight:800;font-size:16px;
+    padding:15px 30px 15px 24px;border-radius:100px;border:0;cursor:pointer;
+    transition:transform .15s ease, box-shadow .2s ease;
+    box-shadow:0 14px 40px rgba(0,0,0,.4);
+  }
+  .btn-play:hover{transform:translateY(-2px);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+  .btn-play svg{width:20px;height:20px}
+  .btn-ghost{
+    display:inline-flex;align-items:center;gap:10px;
+    background:rgba(245,244,240,.1);color:var(--white);font-weight:600;font-size:15px;
+    padding:15px 26px;border-radius:100px;border:1px solid var(--line);cursor:pointer;
+    backdrop-filter:blur(6px);transition:background .2s ease, transform .15s ease;
+  }
+  .btn-ghost:hover{background:rgba(245,244,240,.18);transform:translateY(-2px)}
+  .hero-meta{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    margin-top:30px;font-size:13px;color:var(--muted);font-weight:500;
+  }
+  .hero-meta .pill{display:inline-flex;align-items:center;gap:8px}
+  .hero-meta .sq{width:5px;height:5px;background:var(--muted-2);border-radius:1px}
+  .hero-meta b{color:var(--white);font-weight:700}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{position:relative}
+  .band{padding:clamp(72px,11vw,140px) 0}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--amber);
+    margin-bottom:20px;
+  }
+  .eyebrow .ln{width:26px;height:1px;background:var(--amber);opacity:.6}
+  h2{font-size:clamp(26px,4.4vw,46px);font-weight:800;line-height:1.08;letter-spacing:-.02em}
+  .lead{font-size:clamp(17px,2.2vw,21px);line-height:1.6;color:var(--muted);font-weight:400;max-width:60ch;margin-top:20px}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- LOGLINE ---------- */
+  .logline{background:linear-gradient(180deg,var(--night) 0%, var(--night-2) 100%);text-align:center}
+  .logline .quote{
+    font-size:clamp(26px,4.6vw,50px);font-weight:300;line-height:1.18;letter-spacing:-.01em;
+    max-width:20ch;margin:0 auto;
+  }
+  .logline .quote em{font-style:normal;color:var(--amber)}
+  .logline .sub{margin:34px auto 0;max-width:56ch;color:var(--muted);font-size:clamp(16px,2vw,19px);line-height:1.65}
+
+  /* ---------- FEATURED / TRAILER STRIP ---------- */
+  .featured{background:var(--night-2)}
+  .feat-card{
+    position:relative;border-radius:20px;overflow:hidden;cursor:pointer;
+    aspect-ratio:16/9;border:1px solid var(--line);
+    box-shadow:0 40px 90px rgba(0,0,0,.5);
+  }
+  .feat-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+  .feat-card:hover img{transform:scale(1.04)}
+  .feat-card .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,14,20,.15) 0%,rgba(11,14,20,.15) 45%,rgba(11,14,20,.85) 100%)}
+  .feat-card .play-o{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:clamp(66px,9vw,96px);height:clamp(66px,9vw,96px);border-radius:50%;
+    background:rgba(245,244,240,.14);border:1.5px solid rgba(245,244,240,.7);
+    display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);
+    transition:transform .2s ease, background .2s ease;
+  }
+  .feat-card:hover .play-o{transform:translate(-50%,-50%) scale(1.08);background:var(--red);border-color:var(--red)}
+  .feat-card .play-o svg{width:34%;height:34%;margin-left:6%}
+  .feat-card .cap{position:absolute;left:0;bottom:0;padding:clamp(20px,3vw,34px);z-index:2}
+  .feat-card .cap .k{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:8px}
+  .feat-card .cap .t{font-size:clamp(20px,3vw,30px);font-weight:800;letter-spacing:-.01em}
+  .feat-note{margin-top:18px;font-size:13px;color:var(--muted-2);text-align:center}
+
+  /* ---------- WORLD / GALLERY ---------- */
+  .world{background:var(--night)}
+  .world-head{max-width:var(--maxw);margin:0 auto 44px;text-align:center;display:flex;flex-direction:column;align-items:center}
+  .world-head .eyebrow{justify-content:center}
+  .mosaic{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  .tile{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .tile img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+  .tile:hover img{transform:scale(1.05)}
+  .tile .g{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(11,14,20,.75) 100%)}
+  .tile .lb{position:absolute;left:16px;bottom:14px;z-index:2;font-size:13px;font-weight:600;color:var(--white);letter-spacing:.01em}
+  .tile .lb small{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:4px}
+  .t-wide{grid-column:span 4;aspect-ratio:16/8}
+  .t-tall{grid-column:span 2;aspect-ratio:4/5}
+  .t-sq{grid-column:span 2;aspect-ratio:1/1}
+  .t-half{grid-column:span 3;aspect-ratio:16/9}
+
+  .facts{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:44px}
+  .fact{
+    flex:1;min-width:150px;max-width:230px;text-align:center;
+    padding:26px 18px;border:1px solid var(--line);border-radius:16px;background:rgba(245,244,240,.03);
+  }
+  .fact .n{font-size:clamp(30px,5vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1}
+  .fact .n .u{color:var(--red)}
+  .fact .l{margin-top:10px;font-size:13px;color:var(--muted);line-height:1.4}
+
+  /* ---------- HOST ---------- */
+  .host{background:linear-gradient(180deg,var(--night-2) 0%, var(--night) 100%)}
+  .host-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,64px);align-items:center}
+  .host-media{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--line);box-shadow:0 40px 90px rgba(0,0,0,.5)}
+  .host-media img{width:100%;height:100%;object-fit:cover}
+  .host-media .lt{
+    position:absolute;left:0;bottom:22px;background:rgba(8,11,17,.82);backdrop-filter:blur(6px);
+    border-left:3px solid var(--red);padding:12px 20px 12px 18px;
+  }
+  .host-media .lt .nm{font-size:16px;font-weight:800;letter-spacing:.02em;text-transform:uppercase}
+  .host-media .lt .rl{font-size:13px;color:var(--muted);margin-top:3px}
+  .host-media .lt .rl u{text-decoration-color:var(--blue);text-underline-offset:3px}
+  .host h2 span{color:var(--amber)}
+  .host .lead{color:var(--muted)}
+  .host .kv{margin-top:26px;display:flex;flex-direction:column;gap:14px}
+  .host .kv .row{display:flex;gap:14px;align-items:flex-start;font-size:15px;line-height:1.5;color:var(--white)}
+  .host .kv .row b{color:var(--amber);font-weight:800;font-size:13px;letter-spacing:.06em;min-width:96px;padding-top:2px;text-transform:uppercase}
+
+  /* ---------- PRESS / MESSAGGERO ---------- */
+  .press{background:var(--night)}
+  .press-card{
+    display:grid;grid-template-columns:.85fr 1.15fr;gap:0;
+    border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--night-2);
+    box-shadow:0 30px 80px rgba(0,0,0,.45);
+  }
+  .press-img{position:relative;min-height:280px}
+  .press-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .press-img .g{position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,var(--night-2) 100%),linear-gradient(180deg,transparent 60%,rgba(11,14,20,.5) 100%)}
+  .press-body{padding:clamp(28px,4vw,52px);display:flex;flex-direction:column;justify-content:center}
+  .press-src{display:flex;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+  .press-src .tag{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--white);border:1px solid var(--line);padding:6px 12px;border-radius:100px}
+  .press-src .date{font-size:13px;color:var(--muted-2)}
+  .press-quote{font-size:clamp(20px,2.7vw,29px);font-weight:300;line-height:1.32;letter-spacing:-.01em}
+  .press-quote b{font-weight:700}
+  .press-link{display:inline-flex;align-items:center;gap:9px;margin-top:28px;font-weight:700;font-size:15px;color:var(--amber);width:fit-content}
+  .press-link svg{width:15px;height:15px;transition:transform .2s ease}
+  .press-link:hover svg{transform:translate(3px,-3px)}
+
+  /* ---------- PREMIERE ---------- */
+  .premiere{background:linear-gradient(180deg,var(--night) 0%, var(--night-2) 100%);text-align:center}
+  .prem-inner{max-width:720px;margin:0 auto}
+  .prem-badge{
+    display:inline-flex;align-items:center;gap:10px;
+    border:1px solid var(--line);border-radius:100px;padding:9px 18px;
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--amber);margin-bottom:26px;
+  }
+  .prem-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px var(--amber)}
+  .premiere h2{margin-bottom:18px}
+  .prem-when{
+    display:flex;align-items:stretch;justify-content:center;gap:0;flex-wrap:wrap;
+    margin-top:40px;border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  }
+  .prem-when .cell{padding:24px 30px;flex:1;min-width:160px}
+  .prem-when .cell + .cell{border-left:1px solid var(--line)}
+  .prem-when .cell .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2);font-weight:700;margin-bottom:8px}
+  .prem-when .cell .v{font-size:clamp(17px,2.2vw,20px);font-weight:700}
+  .prem-when .cell .v small{display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:3px}
+
+  /* ---------- CTA ---------- */
+  .cta{background:var(--night-2);text-align:center;overflow:hidden;position:relative}
+  .cta::before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background:radial-gradient(60% 60% at 50% 0%, rgba(0,61,165,.28) 0%, transparent 70%);
+  }
+  .cta .wrap{position:relative;z-index:1}
+  .cta-mark{height:74px;width:auto;margin:0 auto 30px;opacity:.95}
+  .cta h2{max-width:18ch;margin:0 auto}
+  .cta p{margin:20px auto 0;max-width:52ch;color:var(--muted);font-size:clamp(16px,2vw,19px);line-height:1.6}
+  .cta-btn{
+    display:inline-flex;align-items:center;gap:12px;margin-top:34px;
+    background:var(--red);color:#fff;font-weight:800;font-size:17px;
+    padding:17px 34px;border-radius:100px;
+    box-shadow:0 18px 44px rgba(220,28,46,.32);transition:transform .15s ease, box-shadow .2s ease;
+  }
+  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 24px 54px rgba(220,28,46,.42)}
+  .cta-btn svg{width:20px;height:20px}
+
+  /* ---------- FOOTER ---------- */
+  .foot{background:var(--night);border-top:1px solid var(--line);padding:56px 0 44px}
+  .foot-top{display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;padding-bottom:34px;border-bottom:1px solid var(--line)}
+  .foot-brands{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .foot-brands img{height:30px;width:auto;opacity:.9;transition:opacity .2s ease}
+  .foot-brands a:hover img{opacity:1}
+  .foot-brands .x{color:var(--muted-2);font-size:18px;font-weight:300}
+  .foot-social{display:flex;gap:12px}
+  .foot-social a{
+    display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:100px;
+    padding:10px 18px;font-size:14px;font-weight:600;color:var(--white);transition:background .2s ease}
+  .foot-social a:hover{background:rgba(245,244,240,.06)}
+  .foot-social svg{width:16px;height:16px}
+  .foot-bot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:28px}
+  .foot-claim{font-size:15px;font-weight:300;color:var(--white)}
+  .foot-claim b{font-weight:700}
+  .foot-meta{font-size:13px;color:var(--muted-2);display:flex;gap:16px;flex-wrap:wrap}
+
+  /* ---------- MODAL ---------- */
+  .modal{
+    position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+    background:rgba(4,6,10,.94);backdrop-filter:blur(8px);padding:24px;
+    opacity:0;transition:opacity .3s ease;
+  }
+  .modal.open{display:flex;opacity:1}
+  .modal-inner{position:relative;width:100%;max-width:1120px;aspect-ratio:16/9}
+  .modal-frame{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:14px;background:#000;box-shadow:0 40px 120px rgba(0,0,0,.7)}
+  .modal-close{
+    position:absolute;top:-52px;right:0;width:42px;height:42px;border-radius:50%;
+    background:rgba(245,244,240,.1);border:1px solid var(--line);color:#fff;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:background .2s ease}
+  .modal-close:hover{background:var(--red);border-color:var(--red)}
+  .modal-close svg{width:18px;height:18px}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .host-grid{grid-template-columns:1fr;gap:30px}
+    .host-media{max-width:420px;order:-1}
+    .press-card{grid-template-columns:1fr}
+    .press-img{min-height:220px;aspect-ratio:16/9}
+    .press-img .g{background:linear-gradient(180deg,transparent 55%,var(--night-2) 100%)}
+    .mosaic{grid-template-columns:repeat(2,1fr);gap:12px}
+    .t-wide,.t-tall,.t-sq,.t-half{grid-column:span 1;aspect-ratio:4/5}
+    .t-wide{grid-column:span 2;aspect-ratio:16/10}
+  }
+  @media (max-width:560px){
+    .nav-by{display:none}
+    .nav-sep{display:none}
+    .cta-long{display:none}
+    .cta-word{display:none}
+    .nav-cta{padding:9px;width:40px;height:40px;justify-content:center;gap:0}
+    .nav-cta svg{width:18px;height:18px}
+    .hero-actions{flex-direction:column;align-items:stretch}
+    .hero-actions .btn-play,.hero-actions .btn-ghost{justify-content:center;width:100%}
+    .modal-close{top:-48px}
+    .prem-when .cell + .cell{border-left:0;border-top:1px solid var(--line)}
+    .foot-top{flex-direction:column;align-items:flex-start}
+    .foot-bot{flex-direction:column;align-items:flex-start;gap:10px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .hero-video{display:none}
   }
 </style>
 </head>
 <body>
-  <main class="wrap">
-    <div class="bar" aria-hidden="true"></div>
-    <div class="kicker">RE/MAX Abacus Roma</div>
-    <h1>Gente <span>Immobiliare</span></h1>
-    <p>Comprare o vendere casa senza pensieri, con chi il mestiere lo fa sul serio.</p>
-    <a class="cta" href="https://www.youtube.com/@remaxabacusroma" rel="noopener">Guardaci su YouTube</a>
-    <div class="foot">genteimmobiliare.it</div>
-  </main>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-l">
+    <img class="nav-logo" src="/assets/lgim-logo.svg" alt="La Gente Immobiliare" width="38" height="34">
+    <span class="nav-sep" aria-hidden="true"></span>
+    <span class="nav-by">RE/MAX Abacus · Quitebold</span>
+  </div>
+  <a class="nav-cta" href="https://www.youtube.com/@remaxabacusroma" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6z"/></svg>
+    <span class="cta-long">Guarda su </span><span class="cta-word">YouTube</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <video class="hero-video" autoplay muted loop playsinline poster="/assets/hero-poster.jpg" aria-hidden="true">
+    <source src="/assets/hero-loop.mp4" type="video/mp4">
+  </video>
+  <img class="hero-fallback" src="/assets/hero-poster.jpg" alt="" aria-hidden="true" style="display:none">
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="wrap">
+      <img class="hero-mark" src="/assets/lgim-logo.svg" alt="La Gente Immobiliare">
+      <div class="hero-eyebrow"><span class="dot"></span> Docu-serie · RE/MAX Abacus</div>
+      <h1>Non le case. <b>Le persone dietro le chiavi.</b></h1>
+      <div class="hero-actions">
+        <button class="btn-play" data-trailer type="button">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4.5v15l13-7.5z"/></svg>
+          Guarda il trailer
+        </button>
+        <a class="btn-ghost" href="#serie">Scopri la serie</a>
+      </div>
+      <div class="hero-meta">
+        <span class="pill"><b>6</b> episodi</span>
+        <span class="sq" aria-hidden="true"></span>
+        <span class="pill">Roma</span>
+        <span class="sq" aria-hidden="true"></span>
+        <span class="pill">Prodotta da <b>Quitebold</b></span>
+        <span class="sq" aria-hidden="true"></span>
+        <span class="pill">2026</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- LOGLINE -->
+<section class="band logline">
+  <div class="wrap reveal">
+    <p class="quote">Dietro ogni finestra <em>c'è una storia.</em></p>
+    <p class="sub">La Gente Immobiliare non è un'agenzia. È una serie di branded entertainment che usa il mercato immobiliare come lente per raccontare storie umane. Ogni casa è un sogno, una transizione, un nuovo inizio. I protagonisti non sono i muri, sono le persone che li scelgono.</p>
+  </div>
+</section>
+
+<!-- FEATURED TRAILER -->
+<section class="band featured" id="trailer">
+  <div class="wrap">
+    <div class="feat-card reveal" data-trailer role="button" tabindex="0" aria-label="Riproduci il trailer">
+      <img src="/assets/hero-poster.jpg" alt="Trailer de La Gente Immobiliare">
+      <div class="scrim" aria-hidden="true"></div>
+      <div class="play-o" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4.5v15l13-7.5z"/></svg></div>
+      <div class="cap">
+        <div class="k">Trailer ufficiale</div>
+        <div class="t">La Gente Immobiliare</div>
+      </div>
+    </div>
+    <p class="feat-note">Il trailer si apre qui dentro, direttamente da YouTube.</p>
+  </div>
+</section>
+
+<!-- WORLD / SERIE -->
+<section class="band world" id="serie">
+  <div class="wrap">
+    <div class="world-head reveal">
+      <div class="eyebrow"><span class="ln"></span> La serie</div>
+      <h2>Sei episodi, una sola domanda.<br>Chi vive, davvero, dietro quella finestra?</h2>
+      <p class="lead" style="text-align:center;margin-left:auto;margin-right:auto">Un racconto documentario girato tra le strade e i tetti di Roma. Sopralluoghi, incontri, trattative e volti veri. Il mestiere immobiliare diventa il filo che tiene insieme storie di vita.</p>
+    </div>
+
+    <div class="mosaic reveal">
+      <div class="tile t-wide">
+        <img src="/assets/still-tetti.jpg" alt="I tetti di Roma">
+        <div class="g" aria-hidden="true"></div>
+        <div class="lb"><small>La città</small>Roma, vista da dove nascono le storie</div>
+      </div>
+      <div class="tile t-sq">
+        <img src="/assets/still-dossier.jpg" alt="Le chiavi e il dossier di una casa">
+        <div class="g" aria-hidden="true"></div>
+        <div class="lb"><small>Le chiavi</small>Ogni pratica è una svolta</div>
+      </div>
+      <div class="tile t-half">
+        <img src="/assets/still-intervista.jpg" alt="Un protagonista intervistato">
+        <div class="g" aria-hidden="true"></div>
+        <div class="lb"><small>Le persone</small>Volti veri, non comparse</div>
+      </div>
+      <div class="tile t-half">
+        <img src="/assets/still-incontro.jpg" alt="L'incontro tra due protagonisti">
+        <div class="g" aria-hidden="true"></div>
+        <div class="lb"><small>L'incontro</small>Dove una scelta prende forma</div>
+      </div>
+    </div>
+
+    <div class="facts reveal">
+      <div class="fact"><div class="n">6</div><div class="l">episodi documentari</div></div>
+      <div class="fact"><div class="n">1</div><div class="l">città protagonista, Roma</div></div>
+      <div class="fact"><div class="n"><span class="u">&#8734;</span></div><div class="l">storie dietro le finestre</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOST -->
+<section class="band host">
+  <div class="wrap">
+    <div class="host-grid">
+      <div class="reveal">
+        <div class="eyebrow"><span class="ln"></span> La voce narrante</div>
+        <h2>Ci accompagna <span>Flaminia Fegarotti.</span></h2>
+        <p class="lead">Una guida che non giudica e non vende. Entra nelle case, ascolta le persone e restituisce le loro storie con misura e calore. La sua voce è il tono di tutta la serie, umano prima che immobiliare.</p>
+        <div class="kv">
+          <div class="row"><b>Ruolo</b><span>Host e voce narrante della docu-serie</span></div>
+          <div class="row"><b>Tono</b><span>Intimo, diretto, mai patinato. Le parole e i volti prima dello stile.</span></div>
+        </div>
+      </div>
+      <div class="host-media reveal">
+        <img src="/assets/still-flaminia.jpg" alt="Flaminia Fegarotti, host de La Gente Immobiliare">
+        <div class="lt">
+          <div class="nm">Flaminia Fegarotti</div>
+          <div class="rl"><u>Host e voce narrante</u></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS / IL MESSAGGERO -->
+<section class="band press">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;margin-bottom:40px">
+      <div class="eyebrow" style="justify-content:center"><span class="ln"></span> Sulla stampa</div>
+      <h2>Ne ha parlato Il Messaggero.</h2>
+    </div>
+    <div class="press-card reveal">
+      <div class="press-img">
+        <img src="/assets/messaggero-roma.jpg" alt="I tetti di Roma nel servizio de Il Messaggero">
+        <div class="g" aria-hidden="true"></div>
+      </div>
+      <div class="press-body">
+        <div class="press-src">
+          <span class="tag">Il Messaggero</span>
+          <span class="date">Spettacoli · Cinema · 23 settembre 2026</span>
+        </div>
+        <p class="press-quote">«La Gente Immobiliare», al Cinema Eden di Roma la docu-serie che racconta <b>le persone dietro le chiavi di casa.</b></p>
+        <a class="press-link" href="https://www.ilmessaggero.it/spettacoli/cinema/la_gente_immobiliare_oggi_al_cinema_eden_di_roma_la_docu_serie_racconta_le_persone_dietro_le_chiavi_di_casa-9781037.html" target="_blank" rel="noopener">
+          Leggi l'articolo su ilmessaggero.it
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREMIERE -->
+<section class="band premiere">
+  <div class="wrap reveal">
+    <div class="prem-inner">
+      <div class="prem-badge"><span class="dot"></span> L'anteprima</div>
+      <h2>Presentata a Roma, al Cinema Eden.</h2>
+      <p class="lead" style="margin-left:auto;margin-right:auto;text-align:center">La Gente Immobiliare è stata portata sul grande schermo il 23 settembre 2026. Da qui, gli episodi vivono su YouTube, dove ognuno può guardarli quando vuole.</p>
+      <div class="prem-when">
+        <div class="cell"><div class="k">Data</div><div class="v">23 settembre 2026</div></div>
+        <div class="cell"><div class="k">Luogo</div><div class="v">Cinema Eden<small>Roma</small></div></div>
+        <div class="cell"><div class="k">Ora guarda</div><div class="v">Su YouTube<small>@remaxabacusroma</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="band cta">
+  <div class="wrap reveal">
+    <img class="cta-mark" src="/assets/lgim-logo.svg" alt="La Gente Immobiliare">
+    <h2>Guarda La Gente Immobiliare.</h2>
+    <p>Trailer ed episodi sono sul canale YouTube di RE/MAX Abacus Roma. Entra e resta per le storie.</p>
+    <a class="cta-btn" href="https://www.youtube.com/@remaxabacusroma" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6z"/></svg>
+      Guarda su YouTube
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brands">
+        <a href="https://remax-abacus.com/" target="_blank" rel="noopener" aria-label="RE/MAX Abacus"><img src="/assets/remax-abacus.png" alt="RE/MAX Abacus"></a>
+        <span class="x" aria-hidden="true">×</span>
+        <img src="/assets/lgim-logo.svg" alt="La Gente Immobiliare" style="height:26px">
+      </div>
+      <div class="foot-social">
+        <a href="https://www.youtube.com/@remaxabacusroma" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6z"/></svg>
+          YouTube
+        </a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <p class="foot-claim">Una serie di <a href="https://remax-abacus.com/" target="_blank" rel="noopener"><b>RE/MAX Abacus</b></a>, prodotta da <a href="https://quitebold.studio/" target="_blank" rel="noopener"><b>Quitebold</b></a>.</p>
+      <div class="foot-meta">
+        <span>genteimmobiliare.it</span>
+        <span>Dietro ogni finestra c'è una storia.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Trailer de La Gente Immobiliare">
+  <div class="modal-inner">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Chiudi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <iframe class="modal-frame" id="modalFrame" title="Trailer de La Gente Immobiliare" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var nav = document.getElementById('nav');
+    function onScroll(){ nav.classList.toggle('solid', window.scrollY > 40); }
+    onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+    var rev = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+    if ('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(ents){
+        ents.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+      rev.forEach(function(el){ io.observe(el); });
+    } else { rev.forEach(function(el){ el.classList.add('in'); }); }
+
+    var hv = document.querySelector('.hero-video');
+    if (hv){
+      hv.addEventListener('error', function(){
+        var fb = document.querySelector('.hero-fallback');
+        hv.style.display='none'; if(fb) fb.style.display='block';
+      });
+    }
+
+    var YT = 'https://www.youtube.com/embed/LlnWaTOlDv0?autoplay=1&rel=0&modestbranding=1&playsinline=1&color=white';
+    var modal = document.getElementById('modal');
+    var frame = document.getElementById('modalFrame');
+    var closeBtn = document.getElementById('modalClose');
+    function open(){
+      frame.src = YT;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function close(){
+      modal.classList.remove('open');
+      frame.src = '';
+      document.body.style.overflow = '';
+    }
+    Array.prototype.slice.call(document.querySelectorAll('[data-trailer]')).forEach(function(el){
+      el.addEventListener('click', open);
+      el.addEventListener('keydown', function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); open(); } });
+    });
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', function(ev){ if(ev.target === modal) close(); });
+    document.addEventListener('keydown', function(ev){ if(ev.key==='Escape' && modal.classList.contains('open')) close(); });
+  })();
+</script>
 </body>
 </html>
