@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,follow">
+<title>Vendi o compra casa a Roma con RE/MAX Abacus — La Gente Immobiliare</title>
+<meta name="description" content="Vuoi vendere casa a Roma al miglior prezzo possibile, o cerchi l'immobile giusto? Un consulente RE/MAX Abacus prende in carico la trattativa. Lascia i tuoi recapiti.">
+<link rel="canonical" href="https://genteimmobiliare.it/vendi">
+<meta name="theme-color" content="#0B0E14">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/lead.css">
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-l">
+    <a href="https://remax-abacus.com/" target="_blank" rel="noopener" aria-label="RE/MAX Abacus"><img class="nav-logo" src="/assets/remax-abacus.png" alt="RE/MAX Abacus"></a>
+    <span class="nav-sep" aria-hidden="true"></span>
+    <span class="nav-by">Vendere e comprare a Roma</span>
+  </div>
+  <a class="nav-cta" href="#lead">Richiedi una valutazione</a>
+</nav>
+
+<!-- HERO -->
+<header class="lhero">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="ln"></span> Vendere e comprare a Roma</div>
+    <h1>La tua casa vale. <b class="r">Falla chiudere al prezzo giusto.</b></h1>
+    <p class="lhero-sub">Un consulente RE/MAX Abacus prende in carico le numerose problematiche della trattativa e lavora per la chiusura al miglior prezzo possibile. Se invece stai comprando, ti muovi con tranquillità, sicurezza e velocità. Inizia da qui.</p>
+    <div class="facts" style="margin-top:24px">
+      <span>Chiusura al <b>miglior prezzo possibile</b></span>
+      <span>Uffici nel <b>cuore di Roma</b>, in Prati</span>
+      <span>Residenziale · commerciale · industriale</span>
+    </div>
+  </div>
+</header>
+
+<!-- REASONS -->
+<section class="band">
+  <div class="wrap">
+    <div class="points reveal">
+      <div class="point"><h4>Le problematiche le teniamo noi</h4><p>Il consulente prende in carico le numerose questioni di una trattativa, così tu non resti solo davanti a documenti e tempi.</p></div>
+      <div class="point"><h4>Al miglior prezzo possibile</h4><p>L'obiettivo dichiarato di RE/MAX Abacus è portare la trattativa alla chiusura al miglior prezzo possibile.</p></div>
+      <div class="point"><h4>Un indirizzo nel cuore di Roma</h4><p>RE/MAX Abacus ti riceve nei suoi uffici in Prati, a due passi dal centro. Per chi acquista, l'impegno è tranquillità, sicurezza e velocità.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD -->
+<section class="band leadband" id="lead">
+  <div class="wrap reveal">
+    <div class="leadband-head">
+      <h2>Raccontaci cosa ti serve, <span class="r">in un minuto</span></h2>
+      <p>Poche domande per capire la tua situazione. Poi un consulente RE/MAX Abacus ti ricontatta, senza impegno.</p>
+    </div>
+    <div id="leadform"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brands">
+        <a href="https://remax-abacus.com/" target="_blank" rel="noopener" aria-label="RE/MAX Abacus"><img src="/assets/remax-abacus.png" alt="RE/MAX Abacus"></a>
+        <span class="x" aria-hidden="true">×</span>
+        <img src="/assets/lgim-logo.svg" alt="La Gente Immobiliare" style="height:24px">
+      </div>
+    </div>
+    <p class="foot-note"><b>RE/MAX Abacus</b> · Via Boezio 2, Roma · 06 37352343 · 335 1813003. I contatti lasciati vengono inoltrati a RE/MAX Abacus.</p>
+  </div>
+</footer>
+
+<script src="/assets/lead.js"></script>
+<script>
+LGIMLead.mount('#leadform', {
+  cf: { endpoint:"https://remax-abacus.com/wp-json/contact-form-7/v1/contact-forms/73/feedback", formId:"73", unitTag:"wpcf7-f73-o1", locale:"en_US", honeypot:"honeypot-762", sitekey:"0x4AAAAAAAcUkWtBw33uTza2", messageField:"your-message" },
+  messageTitle: "Richiesta cliente (vendita/acquisto), dalla pagina clienti de La Gente Immobiliare.",
+  submitLabel: "Richiedi di essere ricontattato",
+  success: { title:"Richiesta inviata", body:"Grazie. Un consulente RE/MAX Abacus ti ricontatterà al più presto per capire come aiutarti." },
+  fallbackUrl: "https://remax-abacus.com/",
+  steps: [
+    { kind:"choice", name:"obiettivo", label:"Obiettivo", fold:true, question:"Cosa vuoi fare?", options:[
+      { value:"Vendere casa", desc:"Ho un immobile da mettere in vendita" },
+      { value:"Vendere e ricomprare", desc:"Cambio casa, coordinando le due operazioni" },
+      { value:"Comprare", desc:"Sto cercando l'immobile giusto" }
+    ]},
+    { kind:"choice", name:"tipo", label:"Tipo di immobile", fold:true, question:"Di che tipo di immobile parliamo?", options:[
+      { value:"Residenziale", desc:"Casa, appartamento" },
+      { value:"Commerciale", desc:"Negozio, ufficio, locale" },
+      { value:"Industriale", desc:"Capannone, magazzino" }
+    ]},
+    { kind:"text", name:"zona", label:"Zona", fold:true, question:"In che zona si trova, o dove stai cercando?", placeholder:"Es. Roma, Prati, EUR..." },
+    { kind:"text", name:"your-name", label:"Nome", question:"Come ti chiami?", placeholder:"Il tuo nome" },
+    { kind:"text", name:"your-phone", label:"Telefono", inputType:"tel", question:"A che numero ti richiamiamo?", placeholder:"Il tuo telefono" },
+    { kind:"text", name:"your-email", label:"Email", inputType:"email", question:"E la tua email?", placeholder:"La tua email" }
+  ]
+});
+</script>
+</body>
+</html>
