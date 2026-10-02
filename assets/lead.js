@@ -104,7 +104,7 @@
       stage.innerHTML = ""; stage.appendChild(step);
       requestAnimationFrame(function () { step.classList.add("on"); });
       var inp = step.querySelector("input[type=text],input[type=tel],input[type=email]");
-      if (inp) inp.focus();
+      if (inp) { try { inp.focus({ preventScroll: true }); } catch (e) { /* older browsers */ } }
     }
 
     function navRow(step, primaryLabel, primaryFn, enabled, showHint) {
@@ -249,5 +249,49 @@
     render();
   }
 
-  window.LGIMLead = { mount: function (sel, cfg) { var r = document.querySelector(sel); if (r) new Lead(r, cfg); } };
+  var SITEKEY = "0x4AAAAAAAcUkWtBw33uTza2";
+  function assign(a, b) { for (var k in b) if (Object.prototype.hasOwnProperty.call(b, k)) a[k] = b[k]; return a; }
+
+  window.LGIMLead = {
+    mount: function (sel, cfg) { var r = document.querySelector(sel); if (r) new Lead(r, cfg); },
+
+    // clienti (vendita/acquisto) -> form home remax-abacus.com (CF7 id 73)
+    client: function (opts) {
+      return assign({
+        cf: { endpoint: "https://remax-abacus.com/wp-json/contact-form-7/v1/contact-forms/73/feedback", formId: "73", unitTag: "wpcf7-f73-o1", locale: "en_US", honeypot: "honeypot-762", sitekey: SITEKEY, messageField: "your-message" },
+        submitLabel: "Richiedi di essere ricontattato",
+        success: { title: "Richiesta inviata", body: "Grazie. Un consulente RE/MAX Abacus ti ricontatterà al più presto." },
+        fallbackUrl: "https://remax-abacus.com/",
+        steps: [
+          { kind: "choice", name: "obiettivo", label: "Obiettivo", fold: true, question: "Qual è il tuo obiettivo?", options: [
+            { value: "Vendere per ricomprare", desc: "Cambiare casa coordinando le due operazioni" },
+            { value: "Vendere", desc: "Mettere in vendita il mio immobile" },
+            { value: "Comprare", desc: "Cerco la casa giusta" }
+          ] },
+          { kind: "text", name: "your-name", label: "Nome", question: "Come ti chiami?", placeholder: "Il tuo nome" },
+          { kind: "text", name: "your-phone", label: "Telefono", inputType: "tel", question: "A che numero ti richiamiamo?", placeholder: "Il tuo telefono" },
+          { kind: "text", name: "your-email", label: "Email", inputType: "email", question: "E la tua email?", placeholder: "La tua email" }
+        ]
+      }, opts || {});
+    },
+
+    // agenti (Lavora con noi) -> form carriera remax-abacus.com (CF7 id 234, con CV)
+    agent: function (opts) {
+      return assign({
+        cf: { endpoint: "https://remax-abacus.com/wp-json/contact-form-7/v1/contact-forms/234/feedback", formId: "234", unitTag: "wpcf7-f234-o1", locale: "it_IT", honeypot: "honeypot-421", sitekey: SITEKEY },
+        submitLabel: "Invia la candidatura",
+        success: { title: "Candidatura inviata", body: "Grazie. RE/MAX Abacus ti ricontatterà per farti conoscere la squadra." },
+        fallbackUrl: "https://remax-abacus.com/carriera/",
+        fallbackLabel: "Candidati sul sito RE/MAX Abacus",
+        steps: [
+          { kind: "text", name: "your-name", label: "Nome", question: "Come ti chiami?", placeholder: "Il tuo nome" },
+          { kind: "text", name: "your-cognome", label: "Cognome", question: "E il cognome?", placeholder: "Il tuo cognome" },
+          { kind: "text", name: "your-citta", label: "Città", question: "In che città vuoi operare?", placeholder: "Es. Roma" },
+          { kind: "text", name: "your-tel", label: "Telefono", inputType: "tel", question: "A che numero ti richiamiamo?", placeholder: "Il tuo telefono" },
+          { kind: "text", name: "your-email", label: "Email", inputType: "email", question: "E la tua email?", placeholder: "La tua email" },
+          { kind: "file", name: "file-170", label: "CV", accept: ".pdf,.doc,.docx", question: "Allega il tuo CV", help: "PDF o Word. È l'ultimo passo." }
+        ]
+      }, opts || {});
+    }
+  };
 })();
