@@ -21,6 +21,22 @@
     rev.forEach(function (el) { io.observe(el); });
   } else { rev.forEach(function (el) { el.classList.add("in"); }); }
 
+  /* click-to-play YouTube embed facade */
+  Array.prototype.slice.call(document.querySelectorAll(".ytembed")).forEach(function (box) {
+    function play() {
+      var id = box.getAttribute("data-id"); if (!id || box.classList.contains("playing")) return;
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1&playsinline=1&color=white";
+      f.title = "Episodio La Gente Immobiliare";
+      f.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+      f.setAttribute("allowfullscreen", "");
+      f.className = "yt-frame";
+      box.innerHTML = ""; box.appendChild(f); box.classList.add("playing");
+    }
+    box.addEventListener("click", play);
+    box.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); play(); } });
+  });
+
   /* ---------- Turnstile loader ---------- */
   var tsReady = false;
   function loadTurnstile(cb) {
