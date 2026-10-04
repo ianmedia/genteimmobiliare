@@ -243,7 +243,7 @@
           context: { pageUri: location.href, pageName: document.title },
           legalConsentOptions: { consent: { consentToProcess: true, text: "Acconsento al trattamento dei miei dati secondo la privacy policy." } }
         };
-        var ep = "https://api-" + (cf.region || "na1") + ".hsforms.com/submit/v3/integration/submit/" + cf.portalId + "/" + cf.formGuid;
+        var ep = "https://api-" + (cf.region || "na1") + ".hsforms.com/submissions/v3/integration/submit/" + cf.portalId + "/" + cf.formGuid;
         fetch(ep, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
           .then(function (r) { if (r.ok) { done(); } else { fail(step); } })
           .catch(function () { fail(step); })
@@ -299,13 +299,11 @@
   window.LGIMLead = {
     mount: function (sel, cfg) { var r = document.querySelector(sel); if (r) new Lead(r, cfg); },
 
-    // clienti (vendita/acquisto) -> modulo "Contatti" di abacus.remax.it
-    // NB: direct submit alla Forms API HubSpot (portal 27198741, form b385e858-53b6-4d75-94d4-8789a4994256, eu1)
-    // non e' attivo: i moduli del loro nuovo sito passano da un backend privato. Per ora handoff al modulo ufficiale.
+    // clienti (vendita/acquisto) -> invio diretto al modulo HubSpot "Contatti" di abacus.remax.it
     client: function (opts) {
       return assign({
-        cf: { handoff: true },
-        submitLabel: "Completa su RE/MAX Abacus",
+        cf: { provider: "hubspot", portalId: "27198741", formGuid: "b385e858-53b6-4d75-94d4-8789a4994256", region: "eu1" },
+        submitLabel: "Richiedi di essere ricontattato",
         success: { title: "Richiesta inviata", body: "Grazie. Un consulente RE/MAX Abacus ti ricontatterà al più presto." },
         fallbackUrl: "https://abacus.remax.it/contatti",
         steps: [
@@ -322,12 +320,11 @@
       }, opts || {});
     },
 
-    // agenti (Lavora con noi) -> modulo "Lavora con noi" di abacus.remax.it
-    // NB: direct submit HubSpot (form 3519b61b-d2c7-4b7a-b3c7-67c7d899fee8) non attivo: handoff al modulo ufficiale.
+    // agenti (Lavora con noi) -> invio diretto al modulo HubSpot "Lavora con noi" di abacus.remax.it
     agent: function (opts) {
       return assign({
-        cf: { handoff: true },
-        submitLabel: "Candidati su RE/MAX Abacus",
+        cf: { provider: "hubspot", portalId: "27198741", formGuid: "3519b61b-d2c7-4b7a-b3c7-67c7d899fee8", region: "eu1" },
+        submitLabel: "Invia la candidatura",
         success: { title: "Candidatura inviata", body: "Grazie. RE/MAX Abacus ti ricontatterà per conoscerti. Se vuoi, puoi anche allegare il CV completando sul sito RE/MAX Abacus." },
         fallbackUrl: "https://abacus.remax.it/lavora-con-noi",
         fallbackLabel: "Candidati sul sito RE/MAX Abacus",
