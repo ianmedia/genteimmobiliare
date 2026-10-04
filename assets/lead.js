@@ -236,6 +236,7 @@
         add("email", answers["your-email"]);
         add("phone", answers["your-phone"] || answers["your-tel"]);
         add("city", answers["your-citta"]);
+        add("privacy_website", "true"); // campo consenso del form HubSpot (si arriva qui solo dopo accettazione)
         var msg = foldedMessage();
         if (msg) add("message", msg);
         var payload = {
@@ -325,7 +326,7 @@
       return assign({
         cf: { provider: "hubspot", portalId: "27198741", formGuid: "3519b61b-d2c7-4b7a-b3c7-67c7d899fee8", region: "eu1" },
         submitLabel: "Invia la candidatura",
-        success: { title: "Candidatura inviata", body: "Grazie. RE/MAX Abacus ti ricontatterà per conoscerti. Se vuoi, puoi anche allegare il CV completando sul sito RE/MAX Abacus." },
+        success: { title: "Candidatura inviata", body: "Grazie. RE/MAX Abacus ti ricontatterà per conoscerti." },
         fallbackUrl: "https://abacus.remax.it/lavora-con-noi",
         fallbackLabel: "Candidati sul sito RE/MAX Abacus",
         steps: [
