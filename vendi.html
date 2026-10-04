@@ -77,12 +77,9 @@
 
 <script src="/assets/lead.js"></script>
 <script>
-LGIMLead.mount('#leadform', {
-  cf: { endpoint:"https://remax-abacus.com/wp-json/contact-form-7/v1/contact-forms/73/feedback", formId:"73", unitTag:"wpcf7-f73-o1", locale:"en_US", honeypot:"honeypot-762", sitekey:"0x4AAAAAAAcUkWtBw33uTza2", messageField:"your-message" },
+LGIMLead.mount('#leadform', LGIMLead.client({
   messageTitle: "Richiesta cliente (vendita/acquisto), dalla pagina clienti de La Gente Immobiliare.",
-  submitLabel: "Richiedi di essere ricontattato",
   success: { title:"Richiesta inviata", body:"Grazie. Un consulente RE/MAX Abacus ti ricontatterà al più presto per capire come aiutarti." },
-  fallbackUrl: "https://remax-abacus.com/",
   steps: [
     { kind:"choice", name:"obiettivo", label:"Obiettivo", fold:true, question:"Cosa vuoi fare?", options:[
       { value:"Vendere casa", desc:"Ho un immobile da mettere in vendita" },
@@ -94,12 +91,12 @@ LGIMLead.mount('#leadform', {
       { value:"Commerciale", desc:"Negozio, ufficio, locale" },
       { value:"Industriale", desc:"Capannone, magazzino" }
     ]},
-    { kind:"text", name:"zona", label:"Zona", fold:true, question:"In che zona si trova, o dove stai cercando?", placeholder:"Es. Roma, Prati, EUR..." },
-    { kind:"text", name:"your-name", label:"Nome", question:"Come ti chiami?", placeholder:"Il tuo nome" },
+    { kind:"text", name:"your-citta", label:"Zona", question:"In che zona si trova, o dove stai cercando?", placeholder:"Es. Roma, Prati, EUR..." },
+    { kind:"text", name:"your-name", label:"Nome", question:"Come ti chiami?", placeholder:"Nome e cognome" },
     { kind:"text", name:"your-phone", label:"Telefono", inputType:"tel", question:"A che numero ti richiamiamo?", placeholder:"Il tuo telefono" },
     { kind:"text", name:"your-email", label:"Email", inputType:"email", question:"E la tua email?", placeholder:"La tua email" }
   ]
-});
+}));
 </script>
 </body>
 </html>

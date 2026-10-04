@@ -90,21 +90,9 @@
 
 <script src="/assets/lead.js"></script>
 <script>
-LGIMLead.mount('#leadform', {
-  cf: { endpoint:"https://remax-abacus.com/wp-json/contact-form-7/v1/contact-forms/234/feedback", formId:"234", unitTag:"wpcf7-f234-o1", locale:"it_IT", honeypot:"honeypot-421", sitekey:"0x4AAAAAAAcUkWtBw33uTza2" },
-  submitLabel: "Invia la candidatura",
-  success: { title:"Candidatura inviata", body:"Grazie. RE/MAX Abacus ti ricontatterà per farti conoscere la squadra." },
-  fallbackUrl: "https://remax-abacus.com/carriera/",
-  fallbackLabel: "Candidati sul sito RE/MAX Abacus",
-  steps: [
-    { kind:"text", name:"your-name", label:"Nome", question:"Come ti chiami?", placeholder:"Il tuo nome" },
-    { kind:"text", name:"your-cognome", label:"Cognome", question:"E il cognome?", placeholder:"Il tuo cognome" },
-    { kind:"text", name:"your-citta", label:"Città", question:"In che città vuoi operare?", placeholder:"Es. Roma" },
-    { kind:"text", name:"your-tel", label:"Telefono", inputType:"tel", question:"A che numero ti richiamiamo?", placeholder:"Il tuo telefono" },
-    { kind:"text", name:"your-email", label:"Email", inputType:"email", question:"E la tua email?", placeholder:"La tua email" },
-    { kind:"file", name:"file-170", label:"CV", accept:".pdf,.doc,.docx", question:"Allega il tuo CV", help:"PDF o Word. È l'ultimo passo." }
-  ]
-});
+LGIMLead.mount('#leadform', LGIMLead.agent({
+  messageTitle: "Candidatura dalla pagina agenti de La Gente Immobiliare."
+}));
 </script>
 </body>
 </html>

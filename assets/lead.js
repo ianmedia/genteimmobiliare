@@ -179,19 +179,21 @@
       cb.onchange = function () { accept = cb.checked; var b = step.querySelector(".lf-submit"); if (b) b.disabled = !accept || sending; setProg(); };
       acc.appendChild(cb); acc.appendChild(span); step.appendChild(acc);
 
-      var ts = el("div", "lf-turnstile"); step.appendChild(ts);
-      loadTurnstile(function () {
-        if (window.turnstile && !ts.hasChildNodes()) {
-          try {
-            window.turnstile.render(ts, {
-              sitekey: cfg.cf.sitekey, theme: "dark", action: "contact-form-7",
-              callback: function (t) { token = t; },
-              "error-callback": function () { token = ""; },
-              "expired-callback": function () { token = ""; }
-            });
-          } catch (e) { /* domain not allowed: submit still attempted */ }
-        }
-      });
+      if (cfg.cf.sitekey) {
+        var ts = el("div", "lf-turnstile"); step.appendChild(ts);
+        loadTurnstile(function () {
+          if (window.turnstile && !ts.hasChildNodes()) {
+            try {
+              window.turnstile.render(ts, {
+                sitekey: cfg.cf.sitekey, theme: "dark", action: "contact-form-7",
+                callback: function (t) { token = t; },
+                "error-callback": function () { token = ""; },
+                "expired-callback": function () { token = ""; }
+              });
+            } catch (e) { /* domain not allowed: submit still attempted */ }
+          }
+        });
+      }
 
       var row = el("div", "lf-nav");
       var bk = el("button", "lf-btn lf-btn-ghost", "Indietro"); bk.type = "button"; bk.onclick = function () { go(i - 1); };
@@ -200,9 +202,44 @@
       row.appendChild(bk); row.appendChild(sb); step.appendChild(row);
     }
 
+    function foldedMessage() {
+      var lines = [];
+      if (cfg.messageTitle) lines.push(cfg.messageTitle);
+      steps.forEach(function (f) { if (f.kind !== "file" && f.fold && answers[f.name]) lines.push(f.label + ": " + answers[f.name]); });
+      return lines.join("\n");
+    }
+
     function submit(step, sb) {
       sending = true; sb.disabled = true; sb.textContent = "Invio...";
       var cf = cfg.cf;
+
+      if (cf.provider === "hubspot") {
+        // split single name into first/last when no explicit cognome
+        var nm = (answers["your-name"] || "").trim();
+        var fn = nm, ln = answers["your-cognome"] || "";
+        if (!ln && nm.indexOf(" ") > 0) { fn = nm.slice(0, nm.indexOf(" ")); ln = nm.slice(nm.indexOf(" ") + 1); }
+        var fields = [];
+        function add(n, v) { if (v && String(v).trim()) fields.push({ name: n, value: String(v).trim() }); }
+        add("firstname", fn); add("lastname", ln);
+        add("email", answers["your-email"]);
+        add("phone", answers["your-phone"] || answers["your-tel"]);
+        add("city", answers["your-citta"]);
+        var msg = foldedMessage();
+        if (msg) add("message", msg);
+        var payload = {
+          fields: fields,
+          context: { pageUri: location.href, pageName: document.title },
+          legalConsentOptions: { consent: { consentToProcess: true, text: "Acconsento al trattamento dei miei dati secondo la privacy policy." } }
+        };
+        var ep = "https://api-" + (cf.region || "na1") + ".hsforms.com/submit/v3/integration/submit/" + cf.portalId + "/" + cf.formGuid;
+        fetch(ep, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+          .then(function (r) { if (r.ok) { done(); } else { fail(step); } })
+          .catch(function () { fail(step); })
+          .then(function () { sending = false; });
+        return;
+      }
+
+      // (legacy) Contact Form 7 multipart submit
       var fd = new FormData();
       fd.append("_wpcf7", cf.formId);
       fd.append("_wpcf7_version", "5.9.8");
@@ -210,20 +247,15 @@
       fd.append("_wpcf7_unit_tag", cf.unitTag);
       fd.append("_wpcf7_container_post", "0");
       fd.append("_wpcf7_posted_data_hash", "");
-      if (cf.messageField) {
-        var lines = [cfg.messageTitle || "", ""];
-        steps.forEach(function (f) { if (f.kind !== "file" && f.fold && answers[f.name]) lines.push(f.label + ": " + answers[f.name]); });
-        fd.append(cf.messageField, lines.join("\n"));
-      }
+      if (cf.messageField) fd.append(cf.messageField, foldedMessage());
       steps.forEach(function (f) {
         if (f.kind !== "file" && f.fold) return;
         if (f.kind === "file") { if (files[f.name]) fd.append(f.name, files[f.name]); }
         else if (answers[f.name] != null) fd.append(f.name, answers[f.name]);
       });
       fd.append("acceptance-223", "1");
-      fd.append(cf.honeypot, "");
+      if (cf.honeypot) fd.append(cf.honeypot, "");
       if (token) fd.append("cf-turnstile-response", token);
-
       fetch(cf.endpoint, { method: "POST", body: fd })
         .then(function (r) { return r.json().catch(function () { return {}; }); })
         .then(function (j) { if (j && j.status === "mail_sent") { done(); } else { fail(step); } })
@@ -255,41 +287,41 @@
   window.LGIMLead = {
     mount: function (sel, cfg) { var r = document.querySelector(sel); if (r) new Lead(r, cfg); },
 
-    // clienti (vendita/acquisto) -> form home remax-abacus.com (CF7 id 73)
+    // clienti (vendita/acquisto) -> form HubSpot "Contatti" di abacus.remax.it
     client: function (opts) {
       return assign({
-        cf: { endpoint: "https://remax-abacus.com/wp-json/contact-form-7/v1/contact-forms/73/feedback", formId: "73", unitTag: "wpcf7-f73-o1", locale: "en_US", honeypot: "honeypot-762", sitekey: SITEKEY, messageField: "your-message" },
+        cf: { provider: "hubspot", portalId: "27198741", formGuid: "b385e858-53b6-4d75-94d4-8789a4994256", region: "eu1" },
         submitLabel: "Richiedi di essere ricontattato",
         success: { title: "Richiesta inviata", body: "Grazie. Un consulente RE/MAX Abacus ti ricontatterà al più presto." },
-        fallbackUrl: "https://remax-abacus.com/",
+        fallbackUrl: "https://abacus.remax.it/contatti",
         steps: [
           { kind: "choice", name: "obiettivo", label: "Obiettivo", fold: true, question: "Qual è il tuo obiettivo?", options: [
             { value: "Vendere per ricomprare", desc: "Cambiare casa coordinando le due operazioni" },
             { value: "Vendere", desc: "Mettere in vendita il mio immobile" },
             { value: "Comprare", desc: "Cerco la casa giusta" }
           ] },
-          { kind: "text", name: "your-name", label: "Nome", question: "Come ti chiami?", placeholder: "Il tuo nome" },
+          { kind: "text", name: "your-name", label: "Nome", question: "Come ti chiami?", placeholder: "Nome e cognome" },
+          { kind: "text", name: "your-citta", label: "Città", question: "In che zona o città?", placeholder: "Es. Roma, Prati" },
           { kind: "text", name: "your-phone", label: "Telefono", inputType: "tel", question: "A che numero ti richiamiamo?", placeholder: "Il tuo telefono" },
           { kind: "text", name: "your-email", label: "Email", inputType: "email", question: "E la tua email?", placeholder: "La tua email" }
         ]
       }, opts || {});
     },
 
-    // agenti (Lavora con noi) -> form carriera remax-abacus.com (CF7 id 234, con CV)
+    // agenti (Lavora con noi) -> form HubSpot "Lavora con noi" di abacus.remax.it
     agent: function (opts) {
       return assign({
-        cf: { endpoint: "https://remax-abacus.com/wp-json/contact-form-7/v1/contact-forms/234/feedback", formId: "234", unitTag: "wpcf7-f234-o1", locale: "it_IT", honeypot: "honeypot-421", sitekey: SITEKEY },
+        cf: { provider: "hubspot", portalId: "27198741", formGuid: "3519b61b-d2c7-4b7a-b3c7-67c7d899fee8", region: "eu1" },
         submitLabel: "Invia la candidatura",
-        success: { title: "Candidatura inviata", body: "Grazie. RE/MAX Abacus ti ricontatterà per farti conoscere la squadra." },
-        fallbackUrl: "https://remax-abacus.com/carriera/",
+        success: { title: "Candidatura inviata", body: "Grazie. RE/MAX Abacus ti ricontatterà per conoscerti. Se vuoi, puoi anche allegare il CV completando sul sito RE/MAX Abacus." },
+        fallbackUrl: "https://abacus.remax.it/lavora-con-noi",
         fallbackLabel: "Candidati sul sito RE/MAX Abacus",
         steps: [
           { kind: "text", name: "your-name", label: "Nome", question: "Come ti chiami?", placeholder: "Il tuo nome" },
           { kind: "text", name: "your-cognome", label: "Cognome", question: "E il cognome?", placeholder: "Il tuo cognome" },
           { kind: "text", name: "your-citta", label: "Città", question: "In che città vuoi operare?", placeholder: "Es. Roma" },
           { kind: "text", name: "your-tel", label: "Telefono", inputType: "tel", question: "A che numero ti richiamiamo?", placeholder: "Il tuo telefono" },
-          { kind: "text", name: "your-email", label: "Email", inputType: "email", question: "E la tua email?", placeholder: "La tua email" },
-          { kind: "file", name: "file-170", label: "CV", accept: ".pdf,.doc,.docx", question: "Allega il tuo CV", help: "PDF o Word. È l'ultimo passo." }
+          { kind: "text", name: "your-email", label: "Email", inputType: "email", question: "E la tua email?", placeholder: "La tua email" }
         ]
       }, opts || {});
     }
