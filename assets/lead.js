@@ -162,9 +162,12 @@
     }
 
     function renderReview(step) {
+      var handoff = cfg.cf && cfg.cf.handoff;
       step.appendChild(el("span", "lf-count", "Ultimo passo"));
-      step.appendChild(el("h3", "lf-q", "Controlla e invia"));
-      step.appendChild(el("p", "lf-help", "Ti ricontatta RE/MAX Abacus al più presto."));
+      step.appendChild(el("h3", "lf-q", handoff ? "Ci siamo quasi" : "Controlla e invia"));
+      step.appendChild(el("p", "lf-help", handoff
+        ? "Completa l'invio sul modulo ufficiale di RE/MAX Abacus: con questi dati ti bastano pochi secondi."
+        : "Ti ricontatta RE/MAX Abacus al più presto."));
 
       var rv = el("div", "lf-review");
       steps.forEach(function (f) {
@@ -172,6 +175,15 @@
         if (v) rv.appendChild(el("div", "lf-review-row", '<span>' + esc(f.label) + "</span><b>" + esc(v) + "</b>"));
       });
       step.appendChild(rv);
+
+      if (handoff) {
+        var hrow = el("div", "lf-nav");
+        var hbk = el("button", "lf-btn lf-btn-ghost", "Indietro"); hbk.type = "button"; hbk.onclick = function () { go(i - 1); };
+        var ha = document.createElement("a"); ha.className = "lf-btn lf-submit"; ha.href = cfg.fallbackUrl; ha.target = "_blank"; ha.rel = "noreferrer";
+        ha.textContent = (cfg.submitLabel || "Vai al modulo RE/MAX Abacus") + " →";
+        hrow.appendChild(hbk); hrow.appendChild(ha); step.appendChild(hrow);
+        return;
+      }
 
       var acc = el("label", "lf-accept");
       var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = accept;
@@ -287,11 +299,13 @@
   window.LGIMLead = {
     mount: function (sel, cfg) { var r = document.querySelector(sel); if (r) new Lead(r, cfg); },
 
-    // clienti (vendita/acquisto) -> form HubSpot "Contatti" di abacus.remax.it
+    // clienti (vendita/acquisto) -> modulo "Contatti" di abacus.remax.it
+    // NB: direct submit alla Forms API HubSpot (portal 27198741, form b385e858-53b6-4d75-94d4-8789a4994256, eu1)
+    // non e' attivo: i moduli del loro nuovo sito passano da un backend privato. Per ora handoff al modulo ufficiale.
     client: function (opts) {
       return assign({
-        cf: { provider: "hubspot", portalId: "27198741", formGuid: "b385e858-53b6-4d75-94d4-8789a4994256", region: "eu1" },
-        submitLabel: "Richiedi di essere ricontattato",
+        cf: { handoff: true },
+        submitLabel: "Completa su RE/MAX Abacus",
         success: { title: "Richiesta inviata", body: "Grazie. Un consulente RE/MAX Abacus ti ricontatterà al più presto." },
         fallbackUrl: "https://abacus.remax.it/contatti",
         steps: [
@@ -308,11 +322,12 @@
       }, opts || {});
     },
 
-    // agenti (Lavora con noi) -> form HubSpot "Lavora con noi" di abacus.remax.it
+    // agenti (Lavora con noi) -> modulo "Lavora con noi" di abacus.remax.it
+    // NB: direct submit HubSpot (form 3519b61b-d2c7-4b7a-b3c7-67c7d899fee8) non attivo: handoff al modulo ufficiale.
     agent: function (opts) {
       return assign({
-        cf: { provider: "hubspot", portalId: "27198741", formGuid: "3519b61b-d2c7-4b7a-b3c7-67c7d899fee8", region: "eu1" },
-        submitLabel: "Invia la candidatura",
+        cf: { handoff: true },
+        submitLabel: "Candidati su RE/MAX Abacus",
         success: { title: "Candidatura inviata", body: "Grazie. RE/MAX Abacus ti ricontatterà per conoscerti. Se vuoi, puoi anche allegare il CV completando sul sito RE/MAX Abacus." },
         fallbackUrl: "https://abacus.remax.it/lavora-con-noi",
         fallbackLabel: "Candidati sul sito RE/MAX Abacus",
