@@ -95,10 +95,10 @@
     '.hs-form .hs-form-field{margin:0 0 2px!important;width:100%!important;float:none!important}',
     '.hs-form .input{margin:0!important}',
     /* nascondi i campi interni di instradamento (li valorizza/omette il CRM) */
-    '.hs-form .hs_sorgente,.hs-form .hs_codice_agenzia,.hs-form .hs_lead_sito,.hs-form .hs_tipologia_lead_sito{display:none!important}',
+    '.hs-form .hs_sorgente,.hs-form .hs_codice_agenzia,.hs-form .hs_lead_sito,.hs-form .hs_tipologia_lead_sito,.hs-form .hs_agency_id,.hs-form .hs_fonte_lead{display:none!important}',
     '.hs-form label{display:block;font-size:13.5px;font-weight:600;color:rgba(11,14,20,.66);margin:0 0 7px;line-height:1.4}',
     '.hs-form label .hs-form-required{color:#DC1C2E;margin-left:3px}',
-    '.hs-form .hs-input{width:100%!important;box-sizing:border-box;background:#fff!important;border:1.5px solid rgba(11,14,20,.2)!important;border-radius:12px!important;color:#0B0E14!important;-webkit-text-fill-color:#0B0E14!important;caret-color:#0B0E14!important;font-size:16px;font-weight:500;padding:13px 15px!important;outline:none;transition:border-color .2s ease,background .2s ease}',
+    '.hs-form .hs-input:not([type=checkbox]):not([type=radio]){width:100%!important;box-sizing:border-box;background:#fff!important;border:1.5px solid rgba(11,14,20,.2)!important;border-radius:12px!important;color:#0B0E14!important;-webkit-text-fill-color:#0B0E14!important;caret-color:#0B0E14!important;font-size:16px;font-weight:500;padding:13px 15px!important;outline:none;transition:border-color .2s ease,background .2s ease}',
     '.hs-form .hs-input::placeholder{color:rgba(11,14,20,.4)!important;-webkit-text-fill-color:rgba(11,14,20,.4)!important}',
     '.hs-form .hs-input:-webkit-autofill,.hs-form .hs-input:-webkit-autofill:focus{-webkit-text-fill-color:#0B0E14!important;caret-color:#0B0E14!important;transition:background-color 9999s ease-in-out 0s}',
     '.hs-form .hs-input:focus{border-color:#DC1C2E;background:rgba(11,14,20,.03)}',
@@ -107,7 +107,7 @@
     '.hs-form select.hs-input option{background:#fff;color:#0B0E14}',
     '.hs-form .inputs-list{list-style:none;margin:0;padding:0;display:grid;gap:9px}',
     '.hs-form .hs-form-booleancheckbox label,.hs-form .hs-form-checkbox label{display:flex;gap:11px;align-items:flex-start;font-size:14px;font-weight:500;color:rgba(11,14,20,.66);margin:0;line-height:1.5;cursor:pointer}',
-    '.hs-form input[type=checkbox],.hs-form input[type=radio]{width:18px;height:18px;flex:0 0 auto;margin-top:2px;accent-color:#DC1C2E}',
+    '.hs-form input[type=checkbox],.hs-form input[type=radio]{width:18px!important;height:18px!important;min-height:0!important;flex:0 0 auto!important;margin:2px 0 0!important;padding:0!important;border-radius:4px!important;accent-color:#DC1C2E}',
     '.hs-form a{color:#DC1C2E;text-decoration:underline;text-underline-offset:2px}',
     '.hs-form .legal-consent-container{font-size:13px;color:rgba(11,14,20,.5);line-height:1.55}',
     '.hs-form .hs-error-msgs{list-style:none;margin:6px 0 0;padding:0}',
@@ -118,7 +118,17 @@
     '.hs-form .submitted-message,.hs-form .hs-main-font-element{color:#0B0E14;font-size:17px;line-height:1.5}'
   ].join("");
 
-  var HS_LABELS = { email: "Email", firstname: "Nome", lastname: "Cognome", phone: "Telefono" };
+  var HS_LABELS = { email: "Email", firstname: "Nome", lastname: "Cognome", phone: "Telefono", city: "Città", "provincia__c": "Provincia" };
+  // la checkbox di consenso del form agenti ha label interna ("privacy_website"): mettiamo un testo corretto
+  function setHsConsent(doc) {
+    var wrap = doc.querySelector(".hs_privacy_website");
+    if (!wrap) return;
+    var span = wrap.querySelector("label span") || wrap.querySelector("label");
+    if (span && span.getAttribute("data-lgim") !== "it") {
+      span.innerHTML = 'Ho letto e accetto la <a href="' + PRIVACY + '" target="_blank" rel="noreferrer">privacy policy</a> per le candidature.';
+      span.setAttribute("data-lgim", "it");
+    }
+  }
   // messaggi di validazione HubSpot (inglesi) -> italiano
   var HS_ERR = [
     [/please complete this required field\.?/i, "Compila questo campo."],
@@ -163,6 +173,18 @@
       }
       // etichette e pulsante in italiano (il form ufficiale è in inglese)
       for (var k in HS_LABELS) if (Object.prototype.hasOwnProperty.call(HS_LABELS, k)) setHsLabel(doc, k, HS_LABELS[k]);
+      setHsConsent(doc);
+      // "Please Select" -> "Seleziona" sui menu a tendina
+      var sels = doc.querySelectorAll("select.hs-input option");
+      for (var s = 0; s < sels.length; s++) { if (/^please select$/i.test((sels[s].textContent || "").trim())) sels[s].textContent = "Seleziona"; }
+      // sposta il consenso in fondo, subito prima del pulsante (come sul sito ufficiale)
+      var pw = doc.querySelector(".hs_privacy_website");
+      var form = doc.querySelector(".hs-form");
+      var submit = form && (form.querySelector(".hs_submit") || form.querySelector(".hs-submit"));
+      if (pw && submit && submit.parentNode && pw.getAttribute("data-lgim-moved") !== "1") {
+        submit.parentNode.insertBefore(pw, submit);
+        pw.setAttribute("data-lgim-moved", "1");
+      }
       var btn = doc.querySelector("input.hs-button, .hs-button");
       if (btn && cfg && cfg.submitLabel) { if ("value" in btn) btn.value = cfg.submitLabel; else btn.textContent = cfg.submitLabel; }
       // traduci i messaggi di validazione, ora e ad ogni ri-render (HubSpot li rigenera)
