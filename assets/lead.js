@@ -98,8 +98,9 @@
     '.hs-form .hs_sorgente,.hs-form .hs_codice_agenzia,.hs-form .hs_lead_sito,.hs-form .hs_tipologia_lead_sito{display:none!important}',
     '.hs-form label{display:block;font-size:13.5px;font-weight:600;color:rgba(245,244,240,.62);margin:0 0 7px;line-height:1.4}',
     '.hs-form label .hs-form-required{color:#ff4152;margin-left:3px}',
-    '.hs-form .hs-input{width:100%!important;box-sizing:border-box;background:rgba(245,244,240,.04);border:1.5px solid rgba(245,244,240,.22);border-radius:12px;color:#F5F4F0;font-size:16px;font-weight:500;padding:13px 15px;outline:none;transition:border-color .2s ease,background .2s ease}',
-    '.hs-form .hs-input::placeholder{color:rgba(245,244,240,.3)}',
+    '.hs-form .hs-input{width:100%!important;box-sizing:border-box;background:rgba(245,244,240,.04)!important;border:1.5px solid rgba(245,244,240,.22)!important;border-radius:12px!important;color:#F5F4F0!important;-webkit-text-fill-color:#F5F4F0!important;caret-color:#F5F4F0!important;font-size:16px;font-weight:500;padding:13px 15px!important;outline:none;transition:border-color .2s ease,background .2s ease}',
+    '.hs-form .hs-input::placeholder{color:rgba(245,244,240,.3)!important;-webkit-text-fill-color:rgba(245,244,240,.3)!important}',
+    '.hs-form .hs-input:-webkit-autofill,.hs-form .hs-input:-webkit-autofill:focus{-webkit-text-fill-color:#F5F4F0!important;caret-color:#F5F4F0!important;transition:background-color 9999s ease-in-out 0s}',
     '.hs-form .hs-input:focus{border-color:#ff4152;background:rgba(245,244,240,.06)}',
     '.hs-form textarea.hs-input{min-height:112px;resize:vertical}',
     '.hs-form select.hs-input{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,rgba(245,244,240,.5) 50%),linear-gradient(135deg,rgba(245,244,240,.5) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:40px}',
@@ -118,6 +119,28 @@
   ].join("");
 
   var HS_LABELS = { email: "Email", firstname: "Nome", lastname: "Cognome", phone: "Telefono" };
+  // messaggi di validazione HubSpot (inglesi) -> italiano
+  var HS_ERR = [
+    [/please complete this required field\.?/i, "Compila questo campo."],
+    [/please complete all required fields\.?/i, "Compila tutti i campi obbligatori."],
+    [/please enter a valid email address\.?/i, "Inserisci un indirizzo email valido."],
+    [/email must be formatted correctly\.?/i, "Inserisci un indirizzo email valido."],
+    [/this email address is not valid\.?/i, "Inserisci un indirizzo email valido."],
+    [/please enter a valid (phone|telephone) number\.?/i, "Inserisci un numero di telefono valido."],
+    [/the phone number .*?(invalid|not valid).*/i, "Inserisci un numero di telefono valido."],
+    [/please select (an option|a value)\.?/i, "Seleziona un'opzione."],
+    [/there was a problem.*submitting.*/i, "Si è verificato un problema nell'invio. Riprova."]
+  ];
+  function translateHsErrors(doc) {
+    var nodes = doc.querySelectorAll(".hs-error-msg, .hs-error-msgs label, .hs_error_rollup .hs-error-msgs label");
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i], t = (n.textContent || "").trim();
+      if (!t || n.getAttribute("data-lgim") === "it") continue;
+      for (var j = 0; j < HS_ERR.length; j++) {
+        if (HS_ERR[j][0].test(t)) { n.textContent = HS_ERR[j][1]; n.setAttribute("data-lgim", "it"); break; }
+      }
+    }
+  }
   function setHsLabel(doc, field, text) {
     var lab = doc.querySelector(".hs_" + field + " > label");
     if (!lab) return;
@@ -142,6 +165,16 @@
       for (var k in HS_LABELS) if (Object.prototype.hasOwnProperty.call(HS_LABELS, k)) setHsLabel(doc, k, HS_LABELS[k]);
       var btn = doc.querySelector("input.hs-button, .hs-button");
       if (btn && cfg && cfg.submitLabel) { if ("value" in btn) btn.value = cfg.submitLabel; else btn.textContent = cfg.submitLabel; }
+      // traduci i messaggi di validazione, ora e ad ogni ri-render (HubSpot li rigenera)
+      translateHsErrors(doc);
+      var form = doc.querySelector(".hs-form");
+      if (form && !form.getAttribute("data-lgim-obs")) {
+        form.setAttribute("data-lgim-obs", "1");
+        try {
+          var mo = new MutationObserver(function () { translateHsErrors(doc); });
+          mo.observe(form, { childList: true, subtree: true, characterData: true });
+        } catch (e) { /* observer non supportato: errori restano in inglese */ }
+      }
       // tagga la sorgente (campo testo libero): aiuta RE/MAX a riconoscere la provenienza
       var src = doc.querySelector('[name="sorgente"]');
       if (src && !src.value) {
