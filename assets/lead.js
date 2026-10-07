@@ -85,7 +85,7 @@
     document.head.appendChild(s);
   }
 
-  // Tema scuro iniettato DENTRO l'iframe del form HubSpot (same-origin).
+  // Tema CHIARO iniettato DENTRO l'iframe del form HubSpot (same-origin).
   var HS_THEME = [
     '@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap");',
     'html,body{background:transparent!important;margin:0!important}',
@@ -96,26 +96,26 @@
     '.hs-form .input{margin:0!important}',
     /* nascondi i campi interni di instradamento (li valorizza/omette il CRM) */
     '.hs-form .hs_sorgente,.hs-form .hs_codice_agenzia,.hs-form .hs_lead_sito,.hs-form .hs_tipologia_lead_sito{display:none!important}',
-    '.hs-form label{display:block;font-size:13.5px;font-weight:600;color:rgba(245,244,240,.62);margin:0 0 7px;line-height:1.4}',
-    '.hs-form label .hs-form-required{color:#ff4152;margin-left:3px}',
-    '.hs-form .hs-input{width:100%!important;box-sizing:border-box;background:rgba(245,244,240,.04)!important;border:1.5px solid rgba(245,244,240,.22)!important;border-radius:12px!important;color:#F5F4F0!important;-webkit-text-fill-color:#F5F4F0!important;caret-color:#F5F4F0!important;font-size:16px;font-weight:500;padding:13px 15px!important;outline:none;transition:border-color .2s ease,background .2s ease}',
-    '.hs-form .hs-input::placeholder{color:rgba(245,244,240,.3)!important;-webkit-text-fill-color:rgba(245,244,240,.3)!important}',
-    '.hs-form .hs-input:-webkit-autofill,.hs-form .hs-input:-webkit-autofill:focus{-webkit-text-fill-color:#F5F4F0!important;caret-color:#F5F4F0!important;transition:background-color 9999s ease-in-out 0s}',
-    '.hs-form .hs-input:focus{border-color:#ff4152;background:rgba(245,244,240,.06)}',
+    '.hs-form label{display:block;font-size:13.5px;font-weight:600;color:rgba(11,14,20,.66);margin:0 0 7px;line-height:1.4}',
+    '.hs-form label .hs-form-required{color:#DC1C2E;margin-left:3px}',
+    '.hs-form .hs-input{width:100%!important;box-sizing:border-box;background:#fff!important;border:1.5px solid rgba(11,14,20,.2)!important;border-radius:12px!important;color:#0B0E14!important;-webkit-text-fill-color:#0B0E14!important;caret-color:#0B0E14!important;font-size:16px;font-weight:500;padding:13px 15px!important;outline:none;transition:border-color .2s ease,background .2s ease}',
+    '.hs-form .hs-input::placeholder{color:rgba(11,14,20,.4)!important;-webkit-text-fill-color:rgba(11,14,20,.4)!important}',
+    '.hs-form .hs-input:-webkit-autofill,.hs-form .hs-input:-webkit-autofill:focus{-webkit-text-fill-color:#0B0E14!important;caret-color:#0B0E14!important;transition:background-color 9999s ease-in-out 0s}',
+    '.hs-form .hs-input:focus{border-color:#DC1C2E;background:rgba(11,14,20,.03)}',
     '.hs-form textarea.hs-input{min-height:112px;resize:vertical}',
-    '.hs-form select.hs-input{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,rgba(245,244,240,.5) 50%),linear-gradient(135deg,rgba(245,244,240,.5) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:40px}',
-    '.hs-form select.hs-input option{background:#141a26;color:#F5F4F0}',
+    '.hs-form select.hs-input{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,rgba(11,14,20,.5) 50%),linear-gradient(135deg,rgba(11,14,20,.5) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:40px}',
+    '.hs-form select.hs-input option{background:#fff;color:#0B0E14}',
     '.hs-form .inputs-list{list-style:none;margin:0;padding:0;display:grid;gap:9px}',
-    '.hs-form .hs-form-booleancheckbox label,.hs-form .hs-form-checkbox label{display:flex;gap:11px;align-items:flex-start;font-size:14px;font-weight:500;color:rgba(245,244,240,.62);margin:0;line-height:1.5;cursor:pointer}',
+    '.hs-form .hs-form-booleancheckbox label,.hs-form .hs-form-checkbox label{display:flex;gap:11px;align-items:flex-start;font-size:14px;font-weight:500;color:rgba(11,14,20,.66);margin:0;line-height:1.5;cursor:pointer}',
     '.hs-form input[type=checkbox],.hs-form input[type=radio]{width:18px;height:18px;flex:0 0 auto;margin-top:2px;accent-color:#DC1C2E}',
-    '.hs-form a{color:#ff4152;text-decoration:underline;text-underline-offset:2px}',
-    '.hs-form .legal-consent-container{font-size:13px;color:rgba(245,244,240,.42);line-height:1.55}',
+    '.hs-form a{color:#DC1C2E;text-decoration:underline;text-underline-offset:2px}',
+    '.hs-form .legal-consent-container{font-size:13px;color:rgba(11,14,20,.5);line-height:1.55}',
     '.hs-form .hs-error-msgs{list-style:none;margin:6px 0 0;padding:0}',
-    '.hs-form .hs-error-msg,.hs-form .hs-error-msgs label{color:#ff4152;font-size:13px;font-weight:600;margin:0}',
+    '.hs-form .hs-error-msg,.hs-form .hs-error-msgs label{color:#DC1C2E;font-size:13px;font-weight:600;margin:0}',
     '.hs-form .hs-submit{margin-top:4px}',
     '.hs-form .hs-button{display:inline-flex;align-items:center;cursor:pointer;font-size:16px;font-weight:800;border:0;border-radius:100px;padding:15px 30px;background:#DC1C2E;color:#fff;transition:transform .2s ease,background .2s ease}',
     '.hs-form .hs-button:hover{transform:translateY(-2px);background:#e8253a}',
-    '.hs-form .submitted-message,.hs-form .hs-main-font-element{color:#F5F4F0;font-size:17px;line-height:1.5}'
+    '.hs-form .submitted-message,.hs-form .hs-main-font-element{color:#0B0E14;font-size:17px;line-height:1.5}'
   ].join("");
 
   var HS_LABELS = { email: "Email", firstname: "Nome", lastname: "Cognome", phone: "Telefono" };
