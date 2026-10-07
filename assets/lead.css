@@ -193,6 +193,12 @@ h2 span,h2 .r{color:var(--amber)}
 .lf-err-alt{font-size:13px;color:var(--muted-2)}
 .lf-err-alt a{color:var(--red-2)}
 
+/* ---- Official HubSpot form embed (il tema del form è iniettato dentro l'iframe da lead.js) ---- */
+.lf-hs{min-height:120px}
+.lf-hs-load{color:var(--muted);font-size:15px;padding:14px 0}
+.lf-hs-target{width:100%}
+.lf-hs .hs-form-iframe{width:100%!important;border:0}
+
 @media (max-width:820px){
   .points{grid-template-columns:1fr}
   .kw{flex-direction:column}

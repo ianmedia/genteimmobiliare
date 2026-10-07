@@ -1,6 +1,9 @@
-/* La Gente Immobiliare — shared behaviors + Typeform-style lead form.
-   Submits directly to an existing Contact Form 7 form on RE/MAX Abacus.
-   If the direct send fails, hands the visitor off to the correct page on their site. */
+/* La Gente Immobiliare — shared behaviors + lead form.
+   Il form embeda il modulo HubSpot UFFICIALE di RE/MAX Abacus (stesso portale e stesso
+   form guid usati su abacus.remax.it): così la richiesta è un vero invio HubSpot e arriva
+   nel loro CRM come dal loro sito. Iniettiamo il nostro tema scuro dentro l'iframe (same-origin)
+   e nascondiamo i campi interni di instradamento. Se lo script HubSpot non carica, rimandiamo
+   al modulo sul loro sito. */
 (function () {
   "use strict";
 
@@ -60,6 +63,142 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
   var PRIVACY = "https://remax-abacus.com/privacy-policy/";
+
+  /* ---------- Official HubSpot form embed ---------- */
+  function loadHsForms(region, cb) {
+    if (window.hbspt && window.hbspt.forms) { cb(true); return; }
+    var id = "hs-forms-js";
+    var ex = document.getElementById(id);
+    if (ex) {
+      ex.addEventListener("load", function () { cb(true); });
+      ex.addEventListener("error", function () { cb(false); });
+      if (window.hbspt && window.hbspt.forms) cb(true);
+      return;
+    }
+    var reg = region || "na1";
+    var s = document.createElement("script");
+    s.id = id;
+    s.src = (reg === "na1" ? "https://js.hsforms.net" : "https://js-" + reg + ".hsforms.net") + "/forms/embed/v2.js";
+    s.async = true; s.defer = true;
+    s.addEventListener("load", function () { cb(true); });
+    s.addEventListener("error", function () { cb(false); });
+    document.head.appendChild(s);
+  }
+
+  // Tema scuro iniettato DENTRO l'iframe del form HubSpot (same-origin).
+  var HS_THEME = [
+    '@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap");',
+    'html,body{background:transparent!important;margin:0!important}',
+    'body,.hs-form,.hs-form *{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif!important}',
+    '.hs-form{display:grid;gap:16px}',
+    '.hs-form fieldset{max-width:none!important;margin:0!important}',
+    '.hs-form .hs-form-field{margin:0 0 2px!important;width:100%!important;float:none!important}',
+    '.hs-form .input{margin:0!important}',
+    /* nascondi i campi interni di instradamento (li valorizza/omette il CRM) */
+    '.hs-form .hs_sorgente,.hs-form .hs_codice_agenzia,.hs-form .hs_lead_sito,.hs-form .hs_tipologia_lead_sito{display:none!important}',
+    '.hs-form label{display:block;font-size:13.5px;font-weight:600;color:rgba(245,244,240,.62);margin:0 0 7px;line-height:1.4}',
+    '.hs-form label .hs-form-required{color:#ff4152;margin-left:3px}',
+    '.hs-form .hs-input{width:100%!important;box-sizing:border-box;background:rgba(245,244,240,.04);border:1.5px solid rgba(245,244,240,.22);border-radius:12px;color:#F5F4F0;font-size:16px;font-weight:500;padding:13px 15px;outline:none;transition:border-color .2s ease,background .2s ease}',
+    '.hs-form .hs-input::placeholder{color:rgba(245,244,240,.3)}',
+    '.hs-form .hs-input:focus{border-color:#ff4152;background:rgba(245,244,240,.06)}',
+    '.hs-form textarea.hs-input{min-height:112px;resize:vertical}',
+    '.hs-form select.hs-input{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,rgba(245,244,240,.5) 50%),linear-gradient(135deg,rgba(245,244,240,.5) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:40px}',
+    '.hs-form select.hs-input option{background:#141a26;color:#F5F4F0}',
+    '.hs-form .inputs-list{list-style:none;margin:0;padding:0;display:grid;gap:9px}',
+    '.hs-form .hs-form-booleancheckbox label,.hs-form .hs-form-checkbox label{display:flex;gap:11px;align-items:flex-start;font-size:14px;font-weight:500;color:rgba(245,244,240,.62);margin:0;line-height:1.5;cursor:pointer}',
+    '.hs-form input[type=checkbox],.hs-form input[type=radio]{width:18px;height:18px;flex:0 0 auto;margin-top:2px;accent-color:#DC1C2E}',
+    '.hs-form a{color:#ff4152;text-decoration:underline;text-underline-offset:2px}',
+    '.hs-form .legal-consent-container{font-size:13px;color:rgba(245,244,240,.42);line-height:1.55}',
+    '.hs-form .hs-error-msgs{list-style:none;margin:6px 0 0;padding:0}',
+    '.hs-form .hs-error-msg,.hs-form .hs-error-msgs label{color:#ff4152;font-size:13px;font-weight:600;margin:0}',
+    '.hs-form .hs-submit{margin-top:4px}',
+    '.hs-form .hs-button{display:inline-flex;align-items:center;cursor:pointer;font-size:16px;font-weight:800;border:0;border-radius:100px;padding:15px 30px;background:#DC1C2E;color:#fff;transition:transform .2s ease,background .2s ease}',
+    '.hs-form .hs-button:hover{transform:translateY(-2px);background:#e8253a}',
+    '.hs-form .submitted-message,.hs-form .hs-main-font-element{color:#F5F4F0;font-size:17px;line-height:1.5}'
+  ].join("");
+
+  var HS_LABELS = { email: "Email", firstname: "Nome", lastname: "Cognome", phone: "Telefono" };
+  function setHsLabel(doc, field, text) {
+    var lab = doc.querySelector(".hs_" + field + " > label");
+    if (!lab) return;
+    var req = lab.querySelector(".hs-form-required");
+    lab.textContent = text;
+    if (req) { lab.appendChild(doc.createTextNode(" ")); lab.appendChild(req); }
+  }
+
+  function styleHsIframe(root, cfg) {
+    try {
+      var ifr = root.querySelector("iframe.hs-form-iframe");
+      if (!ifr) return;
+      var doc = ifr.contentDocument || (ifr.contentWindow && ifr.contentWindow.document);
+      if (!doc || !doc.head) return; // cross-origin / non pronto: il form resta comunque funzionante
+      if (!doc.getElementById("lgim-hs-theme")) {
+        var st = doc.createElement("style");
+        st.id = "lgim-hs-theme";
+        st.textContent = HS_THEME;
+        doc.head.appendChild(st);
+      }
+      // etichette e pulsante in italiano (il form ufficiale è in inglese)
+      for (var k in HS_LABELS) if (Object.prototype.hasOwnProperty.call(HS_LABELS, k)) setHsLabel(doc, k, HS_LABELS[k]);
+      var btn = doc.querySelector("input.hs-button, .hs-button");
+      if (btn && cfg && cfg.submitLabel) { if ("value" in btn) btn.value = cfg.submitLabel; else btn.textContent = cfg.submitLabel; }
+      // tagga la sorgente (campo testo libero): aiuta RE/MAX a riconoscere la provenienza
+      var src = doc.querySelector('[name="sorgente"]');
+      if (src && !src.value) {
+        var path = (location.pathname || "").replace(/^\//, "").replace(/\.html$/, "") || "home";
+        src.value = "La Gente Immobiliare · " + path;
+        src.dispatchEvent(new Event("input", { bubbles: true }));
+        src.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    } catch (e) { /* non bloccare mai il form per un problema di stile */ }
+  }
+
+  var hsSeq = 0;
+  function hsFallback(wrap, cfg) {
+    wrap.innerHTML = "";
+    var err = el("div", "lf-err");
+    err.appendChild(el("p", null, "Il modulo non si è caricato. Aprilo sul sito di RE/MAX Abacus, bastano pochi secondi."));
+    var a = document.createElement("a"); a.className = "lf-btn"; a.href = cfg.fallbackUrl; a.target = "_blank"; a.rel = "noreferrer";
+    a.textContent = (cfg.fallbackLabel || "Continua sul sito RE/MAX Abacus") + " →";
+    err.appendChild(a);
+    err.appendChild(el("span", "lf-err-alt", 'Oppure chiama il <a href="tel:+390637352343">06 37352343</a>.'));
+    wrap.appendChild(err);
+  }
+
+  function mountHubspot(root, cfg) {
+    var cf = cfg.cf;
+    var wrap = el("div", "lf lf-hs");
+    var load = el("div", "lf-hs-load", "Carico il modulo RE/MAX Abacus…");
+    var tid = "hs-target-" + (++hsSeq);
+    var target = el("div", "lf-hs-target"); target.id = tid;
+    wrap.appendChild(load); wrap.appendChild(target);
+    root.innerHTML = ""; root.appendChild(wrap);
+
+    var settled = false;
+    var timer = setTimeout(function () { if (!settled) { settled = true; hsFallback(wrap, cfg); } }, 9000);
+
+    loadHsForms(cf.region, function (ok) {
+      if (settled) return;
+      if (!ok || !window.hbspt || !window.hbspt.forms) { settled = true; clearTimeout(timer); hsFallback(wrap, cfg); return; }
+      try {
+        window.hbspt.forms.create({
+          region: cf.region || "na1",
+          portalId: cf.portalId,
+          formId: cf.formGuid,
+          target: "#" + tid,
+          onFormReady: function () {
+            settled = true; clearTimeout(timer);
+            if (load.parentNode) load.parentNode.removeChild(load);
+            wrap.classList.add("ready");
+            // l'iframe può non essere montato nello stesso tick: ritenta brevemente
+            styleHsIframe(target, cfg);
+            setTimeout(function () { styleHsIframe(target, cfg); }, 120);
+            setTimeout(function () { styleHsIframe(target, cfg); }, 500);
+          }
+        });
+      } catch (e) { settled = true; clearTimeout(timer); hsFallback(wrap, cfg); }
+    });
+  }
 
   function Lead(root, cfg) {
     var steps = cfg.steps;
@@ -298,7 +437,11 @@
   function assign(a, b) { for (var k in b) if (Object.prototype.hasOwnProperty.call(b, k)) a[k] = b[k]; return a; }
 
   window.LGIMLead = {
-    mount: function (sel, cfg) { var r = document.querySelector(sel); if (r) new Lead(r, cfg); },
+    mount: function (sel, cfg) {
+      var r = document.querySelector(sel); if (!r) return;
+      if (cfg && cfg.cf && cfg.cf.provider === "hubspot") mountHubspot(r, cfg);
+      else new Lead(r, cfg);
+    },
 
     // clienti (vendita/acquisto) -> invio diretto al modulo HubSpot "Contatti" di abacus.remax.it
     client: function (opts) {
